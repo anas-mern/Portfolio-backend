@@ -30,7 +30,7 @@ const create_project = async (req, res) => {
         } else {
           resolve(result.secure_url);
         }
-      }
+      },
     );
     streamifier.createReadStream(req.file.buffer).pipe(stream);
   });
@@ -57,12 +57,12 @@ const edit_project = async (req, res) => {
             } else {
               resolve(result.secure_url);
             }
-          }
+          },
         );
         streamifier.createReadStream(req.file.buffer).pipe(stream);
       })
     : "";
-  const { title, url, description, skills, order } = req.body;
+  const { title, url, skills, description, order } = req.body;
   const body = {
     title,
     url,
@@ -70,9 +70,12 @@ const edit_project = async (req, res) => {
     skills,
     order,
   };
-  if(image!=="") body.image = image
+  if (image !== "") body.image = image;
   const project = await Project.findByIdAndUpdate(id, body, { new: true });
-  res.status(StatusCodes.OK).json({ success: true, project });
+  res.status(StatusCodes.OK).json({
+    success: true,
+    project,
+  });
 };
 const del_project = async (req, res) => {
   const { id } = req.params;

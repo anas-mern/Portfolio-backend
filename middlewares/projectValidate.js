@@ -4,7 +4,7 @@ const { BadRequestError } = require("../errors");
 const projectValidate = (req, res, next) => {
   const skill = joi
     .string()
-    .valid(["HTML", "CSS", "Js", "React", "Node.js", "Express", "MongoDB"]);
+    .valid("HTML", "CSS", "Js", "React", "Node.js", "Express", "MongoDB");
   if (req.body.skills && typeof req.body.skills === "string") {
     try {
       req.body.skills = JSON.parse(req.body.skills);
@@ -12,6 +12,7 @@ const projectValidate = (req, res, next) => {
       req.body.skills = req.body.skills.split(",");
     }
   }
+
   const projectSchema = joi.object({
     title: joi.string().required().min(5).max(20),
     description: joi.string().required().min(10).max(150),
